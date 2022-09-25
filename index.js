@@ -54,6 +54,10 @@ async function setUserInfo() {
         let data = await getLokUserInfo(ign)
         console.log(JSON.stringify(data))
         document.getElementById('user-level').innerHTML = data.level
+
+        //todo check for winnings and show this accordingly
+        document.getElementById('wallet-winnings-container').style.display = 'none'
+    
         selfData = data
     }
     setCta()
