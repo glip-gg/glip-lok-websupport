@@ -33,6 +33,35 @@ function init() {
         openDeeplink('https://glip.gg/openVideoDescription?url=https://android-hosted-assets.s3.ap-south-1.amazonaws.com/videos/PlayDapp_english.mp4&languages=hindi,english')
     });
 
+    document.getElementById('cta').addEventListener("click", async  function() { 
+        if (isSubmittingIgn) {
+            let submittedIgn = document.getElementById("type-ign-enabled").value
+            document.getElementById('cta').innerHTML = 'Verifying...'
+            let info = await getLokUserInfo(submittedIgn)
+            isSubmittingIgn = false
+            if (info.result) {
+                // TODO need to add level/power zero check to make sure only new users are allowed
+                localStorage.setItem(PREF_LOK_IGN, submittedIgn)
+                setUserInfo()
+                showToastMessage('In game name successfully added')
+            } else {
+                showToastMessage('Invalid in game name. Make sure that this IGN exists in game')
+            }
+            return
+        }
+        if (gameInstalled) {
+            let ign = localStorage.getItem(PREF_LOK_IGN)
+            if (!ign) {
+                document.getElementById('type-ign-enabled').style.display = 'flex'
+                document.getElementById("type-ign-enabled").focus();
+                document.getElementById('cta').innerHTML = 'Submit'
+                isSubmittingIgn = true
+            }
+        } else {
+            openDeeplink('https://glip.gg/openExternal?url=aHR0cHM6Ly9wbGF5Lmdvb2dsZS5jb20vc3RvcmUvYXBwcy9kZXRhaWxzP2lkPWNvbS5ucGx1c2VudC5sb2smdXRtX3NvdXJjZT1nbGlw')
+        }
+    });
+
     checkPackageInstalled(PACKAGE_NAME)
 
     setUserInfo()
@@ -128,37 +157,6 @@ async function setCta() {
     }
 
     document.getElementById('cta').innerHTML = buttonText
-
-    document.getElementById('cta').addEventListener("click", async  function() { 
-        if (isSubmittingIgn) {
-            isSubmittingIgn = false
-            let submittedIgn = document.getElementById("type-ign-enabled").value
-            document.getElementById('cta').innerHTML = 'Verifying...'
-            let info = await getLokUserInfo(submittedIgn)
-            if (info.result) {
-                // TODO need to add level/power zero check to make sure only new users are allowed
-                localStorage.setItem(PREF_LOK_IGN, submittedIgn)
-                setUserInfo()
-                showToastMessage('In game name successfully added')
-            } else {
-                showToastMessage('Invalid in game name. Make sure that this IGN exists in game')
-            }
-            return
-        }
-        if (gameInstalled) {
-            let ign = localStorage.getItem(PREF_LOK_IGN)
-            if (!ign) {
-                document.getElementById('type-ign-enabled').style.display = 'flex'
-                document.getElementById("type-ign-enabled").focus();
-                document.getElementById('cta').innerHTML = 'Submit'
-                setTimeout(() => {
-                    isSubmittingIgn = true
-                }, 1000)
-            }
-        } else {
-            openDeeplink('https://glip.gg/openExternal?url=aHR0cHM6Ly9wbGF5Lmdvb2dsZS5jb20vc3RvcmUvYXBwcy9kZXRhaWxzP2lkPWNvbS5ucGx1c2VudC5sb2smdXRtX3NvdXJjZT1nbGlw')
-        }
-    });
 }
 
 function secondsToDhms(seconds) {
