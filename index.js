@@ -25,7 +25,7 @@ async function getLokUserInfo(ign) {
 function init() {
    contestEndCountdown()
 
-   document.getElementById('wallet-container').addEventListener("click", function() {
+   document.getElementById('wallet-winnings-container').addEventListener("click", function() {
     openDeeplink('https://glip.gg/wallet?source=lok-winnings')
     });
 
@@ -135,6 +135,7 @@ async function setCta() {
             document.getElementById('cta').innerHTML = 'Verifying...'
             let info = await getLokUserInfo(submittedIgn)
             if (info.result) {
+                // TODO need to add level/power zero check to make sure only new users are allowed
                 localStorage.setItem(PREF_LOK_IGN, submittedIgn)
                 setUserInfo()
                 showToastMessage('In game name successfully added')
