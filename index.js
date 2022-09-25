@@ -48,16 +48,15 @@ function contestEndCountdown() {
 }
 
 async function setUserInfo() {
+    //todo check for winnings and show this accordingly
+    document.getElementById('wallet-winnings-container').style.display = 'none'
+
     ign = localStorage.getItem(PREF_LOK_IGN)
     if (ign != null && ign != 'null') {
         console.log(ign)
         let data = await getLokUserInfo(ign)
         console.log(JSON.stringify(data))
         document.getElementById('user-level').innerHTML = data.level
-
-        //todo check for winnings and show this accordingly
-        document.getElementById('wallet-winnings-container').style.display = 'none'
-    
         selfData = data
     }
     setCta()
