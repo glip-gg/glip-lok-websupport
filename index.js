@@ -131,10 +131,10 @@ async function setCta() {
 
     document.getElementById('cta').addEventListener("click", async  function() { 
         if (isSubmittingIgn) {
+            isSubmittingIgn = false
             let submittedIgn = document.getElementById("type-ign-enabled").value
             document.getElementById('cta').innerHTML = 'Verifying...'
             let info = await getLokUserInfo(submittedIgn)
-            isSubmittingIgn = false
             if (info.result) {
                 // TODO need to add level/power zero check to make sure only new users are allowed
                 localStorage.setItem(PREF_LOK_IGN, submittedIgn)
