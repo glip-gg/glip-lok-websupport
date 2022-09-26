@@ -44,10 +44,17 @@ function init() {
             let info = await getLokUserInfo(submittedIgn)
             isSubmittingIgn = false
             if (info.result) {
-                // TODO need to add level/power zero check to make sure only new users are allowed
-                localStorage.setItem(PREF_LOK_IGN, submittedIgn)
-                setUserInfo()
-                showToastMessage('In game name successfully added')
+                let success = await submitIgnToServer(submittedIgn)
+                if (success) {
+                    // TODO need to add level/power zero check to make sure only new users are allowed
+                    localStorage.setItem(PREF_LOK_IGN, submittedIgn)
+                    setUserInfo()
+                    showToastMessage('In game name successfully added')
+                } else {
+                    showToastMessage('Error adding in game name. Try again')
+                    document.getElementById('cta').innerHTML = 'Submit'
+                }
+               
             } else {
                 showToastMessage('Invalid in game name. Make sure that this IGN exists in game')
                 document.getElementById('cta').innerHTML = 'Submit'
@@ -75,6 +82,30 @@ function init() {
     checkPackageInstalled(PACKAGE_NAME)
 
     setUserInfo()
+}
+
+async function submitIgnToServer(ign) {
+
+    const options = {
+        method: 'POST',
+        body: JSON.stringify({
+            ign: ign
+        }),
+        headers: {
+            'Authorization': 'Token ' + appUserToken,
+            'Content-Type': 'application/json'
+        }
+    }
+    console.log(JSON.stringify(options))
+    try {
+        let apiResponse = await fetch(`https://be.namasteapis.com/api/v1/game/ign/lok/`, options)
+        console.log(apiResponse)
+        let data = await apiResponse.json()
+        console.log(data)
+        return data.success
+    } catch {
+        return false
+    }
 }
 
 function verifyLogin() {
@@ -122,6 +153,14 @@ async function setLeaderboard() {
             document.getElementsByClassName('leaderboardRank')[0].innerHTML = ''
         }
       
+    }
+
+    try {
+        let apiResponse = await fetch(`https://be.namasteapis.com/api/v1/game/lok-leaderboard/?page=${leaderboardPage}`)
+        let data = await apiResponse.json()
+        
+    } catch {
+        return
     }
 
     // temprary data, to be replaced with APi
