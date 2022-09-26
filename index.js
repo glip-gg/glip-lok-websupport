@@ -107,10 +107,27 @@ async function setUserInfo() {
     setLeaderboard()
 }
 
+let leaderboardPage = 1
 async function setLeaderboard() {
+    if (leaderboardPage == 1) {
+        if( selfData) {
+            document.getElementsByClassName('leaderboardIgn')[0].innerHTML = selfData.name + ' (you)'
+            document.getElementsByClassName('leaderboardPower')[0].innerHTML = selfData.power
+            document.getElementsByClassName('leaderboardPrize')[0].innerHTML = '$250 NFT'
+            document.getElementsByClassName('leaderboardRank')[0].innerHTML = '#123'
+        } else {
+            document.getElementsByClassName('leaderboardIgn')[0].innerHTML = 'You'
+            document.getElementsByClassName('leaderboardPower')[0].innerHTML = '-'
+            document.getElementsByClassName('leaderboardPrize')[0].innerHTML = ''
+            document.getElementsByClassName('leaderboardRank')[0].innerHTML = ''
+        }
+      
+    }
+
     // temprary data, to be replaced with APi
     let leaderboardData = [
         {
+            userId: 30080,
             rank: 1,
             power: 6863,
             name: 'grylledbear',
@@ -118,6 +135,7 @@ async function setLeaderboard() {
             prize: '$250 NFT'
         },
         {
+            userId: 30080,
             rank: 2,
             power: 56327,
             name: 'sh0x',
@@ -126,21 +144,22 @@ async function setLeaderboard() {
         }
     ]
 
-    if (selfData) {
-        document.getElementById('leaderboard-item-self').style.visibility = 'visible'
-        document.getElementsByClassName('leaderboard-ign-self')[0].innerHTML = selfData.name + ' (you)'
-        document.getElementsByClassName('leaderboard-power-self')[0].innerHTML = selfData.power
-        document.getElementsByClassName('leaderboard-prize-self')[0].innerHTML = '$250 NFT'
-        document.getElementsByClassName('leaderboard-rank-self')[0].innerHTML = '#123'
-    }
- 
-    leaderboardData.forEach(function (item, index) {
-        duplicateLeaderboardItem(`leaderboard-item-${index}`, item)
+    var options = {
+        valueNames: [ 'profileImage', 'leaderboardIgn', 'leaderboardRank', 'leaderboardPower', 'leaderboardPrize' ]
+      };
+      
+    var values = leaderboardData.map((rankData) => {
+            return {
+                profileImage: `https://be.namasteapis.com/api/v1/profile-image/${rankData.userId}/`,
+                leaderboardIgn: rankData.name,
+                leaderboardRank:  "#" + rankData.rank,
+                leaderboardPower: rankData.power,
+                leaderboardPrize: rankData.prize,
+            }
     })
+      
+    var leaderboardList = new List('leaderboard-list', options, values);
 
-    if (!selfData) {
-        document.getElementById('leaderboard-item-self').style.display = 'none'
-    }
 }
 
 
@@ -194,35 +213,6 @@ function secondsToDhms(seconds) {
       return dDisplay + hDisplay;
     }
   }
-
-function duplicateLeaderboardItem(index, rankData) {
-    var original = document.getElementById(`leaderboard-item-self`);
-
-    var clone = original.cloneNode(true);
-    clone.id = `leaderboard-item-${index}`
-
-    clone.style.visibility = 'visible'
-
-    let ignItem = clone.getElementsByClassName('leaderboard-ign-self')[0]
-    ignItem.id = `leaderboard-ign-${index}`
-    ignItem.innerHTML = rankData.name
-
-    let prizeItem = clone.getElementsByClassName('leaderboard-prize-self')[0]
-    prizeItem.id = `leaderboard-prize-${index}`
-    prizeItem.innerHTML = rankData.prize
-
-    let powerItem = clone.getElementsByClassName('leaderboard-power-self')[0]
-    powerItem.id = `leaderboard-power-${index}`
-    powerItem.innerHTML = rankData.power
-
-    let rankItem = clone.getElementsByClassName('leaderboard-rank-self')[0]
-    rankItem.id = `leaderboard-rank-${index}`
-    rankItem.innerHTML = "#" + rankData.rank
-
-    original.parentNode.appendChild(clone);
-
-    return clone
-}
 
 function showAppLogin() {
     var nativeData = {};

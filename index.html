@@ -5,7 +5,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
-
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
 
         <style>
              * {
@@ -149,7 +149,7 @@
                 margin-right: 12px;
             }
 
-            .profile-image {
+            .profileImage {
                 width: 42px;
                 height: 42px;
                 border-radius: 50%;
@@ -214,22 +214,24 @@
 
             <p style="font-weight: 500; font-size: 18px">Battlepower Leaderboard</p>
 
-            <div class="leaderboard-container">
-                <ol id="leaderboard-list">
-                    <li class="leaderboard-list-item" id="leaderboard-item-self" style="padding-top: 8px; visibility: hidden;">
-                        <img class="profile-image" >
+            <div id="leaderboard-list" class="leaderboard-container">
+                <ul class="list">
+      
+                    <li class="leaderboard-list-item" id="leaderboard-item-self" style="padding-top: 8px;">
+                        <img class="profileImage" >
                         <div style="display: flex; flex-direction: column; margin-left: 14px; flex: 1;">
-                            <p class='leaderboard-ign-self' style="font-size: 13px; line-height: 1px;">yourign (you)</p>
-                            <p class='leaderboard-rank-self' style="font-size: 13px; opacity: 0.3; line-height: 1px; margin-top: 6px;">#333</p>
+                            <p class='leaderboardIgn' style="font-size: 13px; line-height: 1px;">yourign (you)</p>
+                            <p class='leaderboardRank' style="font-size: 13px; opacity: 0.3; line-height: 1px; margin-top: 6px;">#333</p>
                         </div>
 
                         <div style="display: flex; flex-direction: column; margin-left: 14px; flex: 1; align-items: flex-end; margin-right: 8px;">
-                            <p class='leaderboard-power-self' style="font-size: 13px; line-height: 1px;">88</p>
-                            <p class='leaderboard-prize-self' style="font-size: 13px; opacity: 0.3; line-height: 1px; margin-top: 6px;">$250 NFT</p>
+                            <p class='leaderboardPower' style="font-size: 13px; line-height: 1px;">88</p>
+                            <p class='leaderboardPrize' style="font-size: 13px; opacity: 0.3; line-height: 1px; margin-top: 6px;">$250 NFT</p>
                         </div>
                     </li>
-                </ol>
-            </div>
+                </ul>
+              </div>
+
         </div>
 
     </body>
