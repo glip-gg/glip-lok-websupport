@@ -14,6 +14,8 @@ let selfData
 let gameInstalled = false
 let isSubmittingIgn = false
 
+let appUserToken
+let appUserId
 
 async function getLokUserInfo(ign) {
     let apiResponse = await fetch(`https://api-lok-live.leagueofkingdoms.com/api/stat/kingdom?name=${ign}`)
@@ -23,6 +25,8 @@ async function getLokUserInfo(ign) {
 
 
 function init() {
+    getUserTokenInfo()
+
    contestEndCountdown()
 
    document.getElementById('wallet-winnings-container').addEventListener("click", function() {
@@ -46,16 +50,22 @@ function init() {
                 showToastMessage('In game name successfully added')
             } else {
                 showToastMessage('Invalid in game name. Make sure that this IGN exists in game')
+                document.getElementById('cta').innerHTML = 'Submit'
             }
             return
         }
         if (gameInstalled) {
             let ign = localStorage.getItem(PREF_LOK_IGN)
             if (!ign) {
-                document.getElementById('type-ign-enabled').style.display = 'flex'
-                document.getElementById("type-ign-enabled").focus();
-                document.getElementById('cta').innerHTML = 'Submit'
-                isSubmittingIgn = true
+                console.log(appUserToken)
+                if (appUserToken && appUserId) {
+                    document.getElementById('type-ign-enabled').style.display = 'flex'
+                    document.getElementById("type-ign-enabled").focus();
+                    document.getElementById('cta').innerHTML = 'Submit'
+                    isSubmittingIgn = true
+                } else {
+                    showAppLogin()
+                }
             }
         } else {
             openDeeplink('https://glip.gg/openExternal?url=aHR0cHM6Ly9wbGF5Lmdvb2dsZS5jb20vc3RvcmUvYXBwcy9kZXRhaWxzP2lkPWNvbS5ucGx1c2VudC5sb2smdXRtX3NvdXJjZT1nbGlw')
@@ -65,6 +75,10 @@ function init() {
     checkPackageInstalled(PACKAGE_NAME)
 
     setUserInfo()
+}
+
+function verifyLogin() {
+
 }
 
 function contestEndCountdown() {
@@ -77,6 +91,7 @@ function contestEndCountdown() {
 }
 
 async function setUserInfo() {
+    
     //todo check for winnings and show this accordingly
     document.getElementById('wallet-winnings-container').style.display = 'none'
 
@@ -209,6 +224,12 @@ function duplicateLeaderboardItem(index, rankData) {
     return clone
 }
 
+function showAppLogin() {
+    var nativeData = {};
+    nativeData['key'] = 6;
+    window.androidObj.nativeSupport(JSON.stringify(nativeData));
+}
+
 function getUserTokenInfo() {
     var nativeData = {};
     nativeData['key'] = 3;
@@ -238,7 +259,11 @@ function openDeeplink(deeplink) {
 }
 
 function callbackUserInfo(userId, token) {
-    
+    appUserToken = token
+    appUserId = userId
+}
+
+function callbackLoginVerified() {
 }
 
 function callbackActivityResume() {
