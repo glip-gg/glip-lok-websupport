@@ -17,6 +17,8 @@ let isSubmittingIgn = false
 let appUserToken
 let appUserId
 
+let leaderboardId = '63314eb97f1c9844aa1466e8'
+
 async function getLokUserInfo(ign) {
     let apiResponse = await fetch(`https://api-lok-live.leagueofkingdoms.com/api/stat/kingdom?name=${ign}`)
     let data = apiResponse.json()
@@ -139,65 +141,85 @@ async function setUserInfo() {
 }
 
 let leaderboardPage = 1
+let leaderboardList
+let currentRankIndex = 0
+
 async function setLeaderboard() {
     if (leaderboardPage == 1) {
-        if( selfData) {
+
+        if(selfData) {
             document.getElementsByClassName('leaderboardIgn')[0].innerHTML = selfData.name + ' (you)'
             document.getElementsByClassName('leaderboardPower')[0].innerHTML = selfData.power
-            document.getElementsByClassName('leaderboardPrize')[0].innerHTML = '$250 NFT'
-            document.getElementsByClassName('leaderboardRank')[0].innerHTML = '#123'
+            document.getElementsByClassName('leaderboardPrize')[0].innerHTML = ''
+            document.getElementsByClassName('leaderboardRank')[0].innerHTML = ''
         } else {
             document.getElementsByClassName('leaderboardIgn')[0].innerHTML = 'You'
             document.getElementsByClassName('leaderboardPower')[0].innerHTML = '-'
             document.getElementsByClassName('leaderboardPrize')[0].innerHTML = ''
             document.getElementsByClassName('leaderboardRank')[0].innerHTML = ''
         }
+
+        try {
+            let options = {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Token ' + appUserToken
+                }
+            }
+            let apiResponse = await fetch(`https://be.namasteapis.com/api/v1/game/leaderboard/`, options)
+            let data = await apiResponse.json()
+            let rank = data.data.userData[leaderboardId].rank
+            selfData.rank = rank
+            console.log('user rank: ' + rank)
+            document.getElementsByClassName('leaderboardRank')[0].innerHTML = '#' + rank
+            document.getElementsByClassName('leaderboardPrize')[0].innerHTML = '$250 NFT'
+        } catch(e) {
+            console.log(e)
+        }
+
+        var options = {
+            valueNames: [ 'profileImage', 'leaderboardIgn', 'leaderboardRank', 'leaderboardPower', 'leaderboardPrize' ]
+          };
+          
+        leaderboardList = new List('leaderboard-list', options);
       
     }
 
     try {
-        let apiResponse = await fetch(`https://be.namasteapis.com/api/v1/game/lok-leaderboard/?page=${leaderboardPage}`)
+        let options = {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Token ' + appUserToken
+            }
+        }
+        let apiResponse = await fetch(`https://be.namasteapis.com/api/v1/game/lok-leaderboard/?page=${leaderboardPage}`, options)
         let data = await apiResponse.json()
-        
-    } catch {
+        let leaderboardData = data.data.scores.map(function (scoreItem) {
+            currentRankIndex++
+            return {
+                userId: scoreItem.userId,
+                rank: currentRankIndex,
+                power: scoreItem.score,
+                name: data.data.users[scoreItem.userId].username,
+                level: data.data.levels[scoreItem.userId].level,
+                prize: '$250 NFT'
+            }
+        })
+
+    leaderboardData.forEach(function (rankData) {
+        leaderboardList.add({
+            profileImage: `https://be.namasteapis.com/api/v1/profile-image/${rankData.userId}/`,
+            leaderboardIgn: rankData.name,
+            leaderboardRank:  "#" + rankData.rank,
+            leaderboardPower: rankData.power,
+            leaderboardPrize: rankData.prize,
+        })
+    })
+    } catch (e) {
+        console.log(e)
         return
     }
 
-    // temprary data, to be replaced with APi
-    let leaderboardData = [
-        {
-            userId: 30080,
-            rank: 1,
-            power: 6863,
-            name: 'grylledbear',
-            level: 16,
-            prize: '$250 NFT'
-        },
-        {
-            userId: 30080,
-            rank: 2,
-            power: 56327,
-            name: 'sh0x',
-            level: 12,
-            prize: '$150 NFT'
-        }
-    ]
-
-    var options = {
-        valueNames: [ 'profileImage', 'leaderboardIgn', 'leaderboardRank', 'leaderboardPower', 'leaderboardPrize' ]
-      };
-      
-    var values = leaderboardData.map((rankData) => {
-            return {
-                profileImage: `https://be.namasteapis.com/api/v1/profile-image/${rankData.userId}/`,
-                leaderboardIgn: rankData.name,
-                leaderboardRank:  "#" + rankData.rank,
-                leaderboardPower: rankData.power,
-                leaderboardPrize: rankData.prize,
-            }
-    })
-      
-    var leaderboardList = new List('leaderboard-list', options, values);
 
 }
 
