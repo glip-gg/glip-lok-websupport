@@ -209,7 +209,7 @@ async function setLeaderboard() {
         let leaderboardData = [
             {
                 userId: '30080',
-                rank: currentRankIndex,
+                rank: currentRankIndex++,
                 power: 72000,
                 name: 'grylledbear',
                 level: '19',
@@ -217,7 +217,7 @@ async function setLeaderboard() {
             },
             {
                 userId: '30080',
-                rank: currentRankIndex,
+                rank: currentRankIndex++,
                 power: 67568,
                 name: 'sh0x',
                 level: '17',
@@ -225,7 +225,7 @@ async function setLeaderboard() {
             },
             {
                 userId: '30080',
-                rank: currentRankIndex,
+                rank: currentRankIndex++,
                 power: 57886,
                 name: 'n0x',
                 level: '16',
@@ -233,7 +233,7 @@ async function setLeaderboard() {
             },
             {
                 userId: '30080',
-                rank: currentRankIndex,
+                rank: currentRankIndex++,
                 power: 51093,
                 name: 'thetimekeeper',
                 level: '13',
@@ -241,7 +241,7 @@ async function setLeaderboard() {
             },
             {
                 userId: '30080',
-                rank: currentRankIndex,
+                rank: currentRankIndex++,
                 power: 47829,
                 name: 'bloo',
                 level: '11',
@@ -249,7 +249,7 @@ async function setLeaderboard() {
             },
             {
                 userId: '30080',
-                rank: currentRankIndex,
+                rank: currentRankIndex++,
                 power: 42839,
                 name: 'zkart',
                 level: '8',
@@ -257,7 +257,7 @@ async function setLeaderboard() {
             },
             {
                 userId: '30080',
-                rank: currentRankIndex,
+                rank: currentRankIndex++,
                 power: 38278,
                 name: 'bigbeach',
                 level: '6',
