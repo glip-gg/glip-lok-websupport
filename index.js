@@ -186,25 +186,84 @@ async function setLeaderboard() {
     }
 
     try {
-        let options = {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Token ' + appUserToken
-            }
-        }
-        let apiResponse = await fetch(`https://be.namasteapis.com/api/v1/game/lok-leaderboard/?page=${leaderboardPage}`, options)
-        let data = await apiResponse.json()
-        let leaderboardData = data.data.scores.map(function (scoreItem) {
-            currentRankIndex++
-            return {
-                userId: scoreItem.userId,
+        // let options = {
+        //     method: 'GET',
+        //     headers: {
+        //         'Authorization': 'Token ' + appUserToken
+        //     }
+        // }
+        // let apiResponse = await fetch(`https://be.namasteapis.com/api/v1/game/lok-leaderboard/?page=${leaderboardPage}`, options)
+        // let data = await apiResponse.json()
+        // let leaderboardData = data.data.scores.map(function (scoreItem) {
+        //     currentRankIndex++
+        //     return {
+        //         userId: scoreItem.userId,
+        //         rank: currentRankIndex,
+        //         power: scoreItem.score,
+        //         name: data.data.users[scoreItem.userId].username,
+        //         level: data.data.levels[scoreItem.userId].level,
+        //         prize: '$250 NFT'
+        //     }
+        // })
+
+        let leaderboardData = [
+            {
+                userId: '30080',
                 rank: currentRankIndex,
-                power: scoreItem.score,
-                name: data.data.users[scoreItem.userId].username,
-                level: data.data.levels[scoreItem.userId].level,
+                power: 72000,
+                name: 'grylledbear',
+                level: '19',
                 prize: '$250 NFT'
+            },
+            {
+                userId: '30080',
+                rank: currentRankIndex,
+                power: 67568,
+                name: 'sh0x',
+                level: '17',
+                prize: '$150 NFT'
+            },
+            {
+                userId: '30080',
+                rank: currentRankIndex,
+                power: 57886,
+                name: 'n0x',
+                level: '16',
+                prize: '-'
+            },
+            {
+                userId: '30080',
+                rank: currentRankIndex,
+                power: 51093,
+                name: 'thetimekeeper',
+                level: '13',
+                prize: '-'
+            },
+            {
+                userId: '30080',
+                rank: currentRankIndex,
+                power: 47829,
+                name: 'bloo',
+                level: '11',
+                prize: '-'
+            },
+            {
+                userId: '30080',
+                rank: currentRankIndex,
+                power: 42839,
+                name: 'zkart',
+                level: '8',
+                prize: '-'
+            },
+            {
+                userId: '30080',
+                rank: currentRankIndex,
+                power: 38278,
+                name: 'bigbeach',
+                level: '6',
+                prize: '-'
             }
-        })
+        ]
 
     leaderboardData.forEach(function (rankData) {
         leaderboardList.add({
