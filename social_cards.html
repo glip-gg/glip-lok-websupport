@@ -1,0 +1,231 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+
+        <style>
+             * {
+                font-family: 'Poppins', monospace;
+                color: white;
+            }            
+
+            .wrapper-card {
+                background: linear-gradient(180deg, #110F40 0%, #1B1694 70.31%, #6F09DB 100%);
+                border-radius: 16px;
+                padding: 18px 12px;
+            }
+
+            .title {
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 24px;
+                letter-spacing: -1px;
+                color: #FFFFFF;
+                margin-bottom: 20px;
+            }
+
+            .claimed-title {
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 11px;
+                line-height: 125%;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                letter-spacing: 0.1px;
+                color: #FFFFFF;
+                opacity: 0.4;
+                margin-top: 12px;
+                margin-bottom: 12px;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .rounded-wrapper {
+                background: rgba(255, 255, 255, 0.08);
+                border-radius: 12px;
+                padding: 12px 12px;
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 125%;
+                display: flex;
+                align-items: center;
+                letter-spacing: 0.1px;
+                color: #FFFFFF;
+                justify-content: space-between;
+                margin-top: 20px;
+            }
+
+            .top-table-card {
+                background: rgba(255, 255, 255, 0.08);
+                border-radius: 12px 12px 4px 4px;
+                padding: 22px 12px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 2px;
+            }
+
+            .bottom-table-card {
+                background: rgba(255, 255, 255, 0.08);
+                border-radius: 4px 4px 12px 12px;
+                padding: 22px 12px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 2px;
+            }
+
+            .middle-table-card {
+                background: rgba(255, 255, 255, 0.08);
+                border-radius: 4px;
+                padding: 22px 12px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 2px;
+            }
+
+            .table-card-title {
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 125%;
+                display: flex;
+                align-items: center;
+                letter-spacing: 0.1px;
+                color: #FFFFFF;
+            }
+
+            .table-card-button {
+                background: linear-gradient(219.64deg, #FF5C66 6.71%, #B004FF 52.64%, #7200FF 93.17%);
+                border-radius: 12px;
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 12px;
+                line-height: 125%;
+                display: flex;
+                align-items: center;
+                letter-spacing: 0.1px;
+                color: #FFFFFF;
+                padding: 6px;
+                width: 65px;
+                text-align: center;
+                justify-content: center;
+                box-shadow: none;
+                border: none;
+            }
+
+        </style>
+    </head>
+
+    <body style="padding: 16px; background-color: #000;">
+        <div class="wrapper-card">
+            <span class="title">Join League of <br/> Kingdoms Socials</span>
+            <div class="rounded-wrapper">
+                <span>$1 reward (2 $LOKA token) <br/>for first 1000 to complete</span>
+            </div>
+            <span class="claimed-title">80/1000 people claimed</span>
+
+            <div class="top-table-card">
+                <span class="table-card-title">Twitter</span>
+                <button onclick="triggerTwitterFollowFlow()" class="table-card-button">Follow</button>
+            </div>
+            <div class="bottom-table-card">
+                <span class="table-card-title">Discord</span>
+                <button onclick="triggerDiscordLoginFlow()" class="table-card-button">Log in</button>
+            </div>
+        </div>
+        <!-- <div style="display: flex; flex-direction: column;">
+        
+            <p style="font-size: 26px; font-weight: 600; margin-top: -12px;">Play League of Kingdoms,<br>level up & win crypto</p>
+
+           <div id='wallet-winnings-container' class="winnings-container">
+
+                <div style="float: left; margin-left: 16px; width: 50%;">
+                    <p style="font-size: 13px;">Your winning</p>
+
+                    <div style="display: flex; flex-direction: row;">
+                        <p style="font-size: 20px; font-weight: 600; line-height: 4px; margin-top: 4px;">1 NFT</p>
+                        <p style="opacity: 0.7; font-size: 13px; line-height: 4px; margin-top: 4px; margin-left: 8px;">$10</p>
+                    </div>
+
+                </div>
+
+                <div class="check-wallet-button">
+                    <p style="color: #E0417D; padding-right: 8px;">Check wallet</p>
+                    <img src="./wallet.svg" width="12px" height="12px">
+                </div>
+           </div>
+
+            <img id="prize-pool-image" src="https://android-hosted-assets.s3.ap-south-1.amazonaws.com/images/glip_lok_prizepool_banner.png"/>
+
+            <div class="contest-container">
+                <div style="display: flex; flex-direction:column; flex: 1;  align-items: center; justify-content: center;">
+                        <p class="contest-dim-text">Contest ends in</p>
+                        <p id='contest-end-timer' class="contest-normal-text"></p>
+                </div>
+                <div class="vertical-divider" ></div>
+                <div style="display: flex; flex-direction:column; flex: 1;  align-items: center; justify-content: center;">
+                    <p class="contest-dim-text">Your castle level</p>
+                    <p id='user-level' class="contest-normal-text">-</p>
+                </div>    
+            </div>
+
+            <input id="type-ign-enabled" class="ign-input" type="text" placeholder="Type your in game name here">
+
+            <p id='cta' class="cta-button">Install Game</p>
+            
+            <p id='type-ign-disabled' class="disabled-button">Type your in game name here</p>
+
+            <p id='install-subtitle' style="font-size: 12px; margin-top: -12px; text-align: center;">⚠️ After installing, come back to this page & enter name</p>
+
+            <p style="font-weight: 500; font-size: 18px">Battlepower Leaderboard</p>
+
+            <div id="leaderboard-list" class="leaderboard-container">
+                <ul class="list">
+      
+                    <li class="leaderboard-list-item" id="leaderboard-item-self" style="padding-top: 8px;">
+                        <img class="profileImage" >
+                        <div style="display: flex; flex-direction: column; margin-left: 14px; flex: 1;">
+                            <p class='leaderboardIgn' style="font-size: 13px; line-height: 1px;"></p>
+                            <p class='leaderboardRank' style="font-size: 13px; opacity: 0.3; line-height: 1px; margin-top: 6px;"></p>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; margin-left: 14px; flex: 1; align-items: flex-end; margin-right: 8px;">
+                            <p class='leaderboardPower' style="font-size: 13px; line-height: 1px;"></p>
+                            <p class='leaderboardPrize' style="font-size: 13px; opacity: 0.3; line-height: 1px; margin-top: 6px;"></p>
+                        </div>
+                    </li>
+                </ul>
+              </div>
+
+        </div> -->
+
+    </body>
+
+    <script>
+        triggerTwitterFollowFlow = () => {
+            window.open("https://twitter.com/intent/follow?screen_name=LeagueKingdoms", '_blank');
+        };
+
+        triggerDiscordLoginFlow = () => {
+            window.open("https://discord.gg/leagueofkingdoms", '_blank');
+        };
+        
+
+    </script>
+    <!-- <script type="application/javascript" src="./index.js"></script> -->
+
+</html>
