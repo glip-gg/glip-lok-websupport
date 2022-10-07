@@ -7,6 +7,107 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
         <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
 
+        <script type="application/javascript">
+            var injectedObject = {
+                "title": "Social Cards",
+                "description": "A collection of social cards for your website.",
+                "url": "https://www.w3schools.com/howto/howto_css_social_cards.asp",
+                "image": "https://www.w3schools.com/howto/img_avatar.png",
+                "claimString": "80/100",
+                "twitterComplete": true,
+                "discordComplete": false,
+            };
+
+            showModalTwitter = function() {
+                document.getElementById("twittermodal").style.display = "block";
+            }
+
+            closeModalTwitter = function() {
+                document.getElementById("twittermodal").style.display = "none";
+            }
+
+            // update claimed-title text with claimString
+            document.addEventListener("DOMContentLoaded", function(event) {
+                document.getElementById("claimed-title").innerHTML = injectedObject.claimString + " people claimed";
+            });
+        </script>
+
+        <style>
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                padding-top: 100px;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgb(0,0,0);
+                background-color: rgba(0,0,0,0.4);
+            }
+
+            .modal-content {
+                background-color: #000;
+                margin: auto;
+                padding: 20px;
+                /* border: 1px solid #888; */
+                /* width: 80%; */
+            }
+
+            .close {
+                color: #aaaaaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            
+            .modal-title {
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 125%;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                letter-spacing: 0.1px;
+                color: #FFFFFF;
+                margin-top: 57px;
+                margin-bottom: 31px;
+                justify-content: center;
+            }
+
+            .blue-button {
+                background: linear-gradient(90.07deg, #3999F9 29.06%, #4A7DFF 96.96%);
+                border-radius: 8px;
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 12px;
+                line-height: 125%;
+                display: flex;
+                align-items: center;
+                letter-spacing: 0.1px;
+                color: #FFFFFF;
+                padding: 6px;
+                width: 65px;
+                text-align: center;
+                justify-content: center;
+                box-shadow: none;
+                border: none;
+                padding-top: 12px;
+                padding-bottom: 12px;
+            }
+        </style>
+
         <style>
              * {
                 font-family: 'Poppins', monospace;
@@ -126,15 +227,17 @@
                 box-shadow: none;
                 border: none;
             }
-
         </style>
     </head>
 
     <body style="padding: 16px; background-color: #000;">
         <div class="wrapper-card">
+            <img src="./assets/icons/dollar_coin.svg" style="width: 24px; height: 24px; margin-bottom: 12px;">
+            <br/>
             <span class="title">Join League of <br/> Kingdoms Socials</span>
             <div class="rounded-wrapper">
                 <span>$1 reward (2 $LOKA token) <br/>for first 1000 to complete</span>
+                <img src="./assets/icons/dollar_coin.svg" style="width: 65px; position: relative; top: 11px;">
             </div>
             <span class="claimed-title">80/1000 people claimed</span>
 
@@ -147,6 +250,14 @@
                 <button onclick="triggerDiscordLoginFlow()" class="table-card-button">Log in</button>
             </div>
         </div>
+        <!-- Modal -->
+        <div id="twittermodal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModalTwitter()">&times;</span>
+                <span class="modal-title">Enter your twitter @</span>
+                <input id="twitter-input-box" placeholder="Enter twitter username" style="background: #141624; width: 100%; padding: 21px 15px; border: none !important;"/>
+                <button style="margin-top: 20px; width: 100%;" onclick="checkTwitterAPIForFollow()" class="blue-button">Submit</button>
+            </div>
         <!-- <div style="display: flex; flex-direction: column;">
         
             <p style="font-size: 26px; font-weight: 600; margin-top: -12px;">Play League of Kingdoms,<br>level up & win crypto</p>
@@ -217,12 +328,29 @@
 
     <script>
         triggerTwitterFollowFlow = () => {
-            window.open("https://twitter.com/intent/follow?screen_name=LeagueKingdoms", '_blank');
+            // open modal
+            showModalTwitter();
+            // window.open("https://twitter.com/intent/follow?screen_name=LeagueKingdoms", '_blank');
         };
 
         triggerDiscordLoginFlow = () => {
             window.open("https://discord.gg/leagueofkingdoms", '_blank');
         };
+
+        checkTwitterAPIForFollow = () => {
+            console.log('asdfsaf');
+            const twitterUsername = document.getElementById('twitter-input-box').value;
+            console.log(twitterUsername);
+            if (twitterUsername) {
+            //      window.open(`https://twitter.com/${twitterUsername}`, '_blank');
+            // Show success message
+            // Hide modal
+            closeModalTwitter();
+            } else {
+                alert('Please enter a valid twitter username');
+            }
+        };
+
         
 
     </script>
