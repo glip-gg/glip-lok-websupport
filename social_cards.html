@@ -19,7 +19,112 @@
                 "gameName": "League of Kingdoms",
             };
 
-            const gameName = injectedObject.gameName;
+            var job = {
+                "tasks": [
+                    {
+                        "type": "SOCIAL_CONNECT",
+                        "taskId": 1
+                    }
+                ],
+                "funded": true,
+                "countClaimed": 0,
+                "_id": 13,
+                "companyId": "62fd0e1b5f653536e9c657a8",
+                "payerId": 10,
+                "title": "Use task's description",
+                "description": "Use task's descriptopn 1000 usdc",
+                "image": "Use task's logo",
+                "videoUri": {
+                    "ENGLISH": "blabla"
+                },
+                "payout": {
+                    "amount": 1000,
+                    "currencyId": 8
+                },
+                "jobType": "MIXED",
+                "stage": "DEVELOPMENT",
+                "onComplete": "Claim 1000 usdc",
+                "onAlreadyCompleted": "Won 1000 usdcs",
+                "maxClaims": 100,
+                "active": true,
+                "createdAt": "2022-10-08T12:21:03.628Z",
+                "updatedAt": "2022-10-08T13:00:16.375Z",
+                "__v": 1,
+                "endTime": "2022-10-08T20:00:00.000Z",
+                "id": 13,
+                "status": "PENDING",
+                "isPaidOut": false,
+                "payoutsDone": {},                
+            }
+
+            var task =  {
+                "_id": 1,
+                "companyId": "62fd0e1b5f653536e9c657a8",
+                "payerId": 10,
+                "type": "SOCIAL_CONNECT",
+                "title": "Join League of Kingdoms Socials",
+                "descriptionButtonText": "$1 reward (2 $LOKA token)for first 1000 to complete",
+                "descriptionButtonLogo": "https://cdn-m.namasteapis.com/crypto/LOK/lok_descr_logo.png",
+                "socials": [
+                    {
+                        "type": "TWITTER",
+                        "displayId": "irshashank",
+                        "id": "11",
+                        "url": "https://twitter.com/intent/follow?screen_name=irshashank",
+                        "buttonText": "Follow"
+                    }
+                ],
+                "onComplete": "Claim",
+                "onAlreadyCompleted": "You won {{payoutString}}",
+                "createdAt": "2022-10-08T12:16:17.253Z",
+                "updatedAt": "2022-10-08T12:16:17.253Z",
+                "__v": 0,
+                "id": 1,
+                "status": "COMPLETED",
+                "connected": {
+                    TWITTER: true,
+                    DISCORD: false
+                }
+            }
+
+            var payer = {
+                "active": true,
+                "_id": 10,
+                "companyId": "62fd0e1b5f653536e9c657a8",
+                "name": "League of Kingdoms",
+                "title": "Play and win crypto",
+                "description": "Win upto 1000 usdc",
+                "image": "https://www.leagueofkingdoms.com/img/logo_mini.png",
+                "logo": "https://www.leagueofkingdoms.com/img/logo_mini.png",
+                "stage": "DEVELOPMENT",
+                "location": {
+                    "type": "ANDROID",
+                    "name": "com.nplusent.lok"
+                },
+                "custodianWalletId": "633edbc69a322497b5965019",
+                "createdAt": "2022-10-06T13:44:38.313Z",
+                "updatedAt": "2022-10-08T12:26:11.169Z",
+                "__v": 0,
+                "jobIds": [
+                    13
+                ],
+                "totalPayout": [
+                    {
+                        "amount": 1000,
+                        "currencyId": 8
+                    }
+                ],
+                "progressBar": {
+                    "done": 0,
+                    "total": 1
+                },
+                "chips": [
+                    "0/1 challenges done",
+                    "₹79763.62/₹79763.62 earned"
+                ]
+            }
+
+            const gameName = payer.name;
 
             showModalTwitter = function() {
                 document.getElementById("twittermodal").style.display = "block";
@@ -37,29 +142,42 @@
                 document.getElementById("discordmodal").style.display = "none";
             }
 
-            // update claimed-title text with claimString
+            // update title text with claimString
             document.addEventListener("DOMContentLoaded", function(event) {
-                document.getElementById("title").innerHTML = injectedObject.title;
+                document.getElementById("title").innerHTML = task.title;
+            });
+
+            // update description text with claimString
+            document.addEventListener("DOMContentLoaded", function(event) {
+                document.getElementById("description").innerHTML = task.descriptionButtonText;
             });
 
             // update claimed-title text with claimString
             document.addEventListener("DOMContentLoaded", function(event) {
-                document.getElementById("description").innerHTML = injectedObject.description;
-            });
-
-            // update claimed-title text with claimString
-            document.addEventListener("DOMContentLoaded", function(event) {
-                document.getElementById("claimed-title").innerHTML = injectedObject.claimString + " people claimed";
+                document.getElementById("claimed-title").innerHTML = `${job.countClaimed}/${job.maxClaims} people claimed`;
             });
 
             // update logo-image with injectedObject.image
             document.addEventListener("DOMContentLoaded", function(event) {
-                document.getElementById("logo-image").src = injectedObject.image;
+                document.getElementById("logo-image").src = payer.image;
             });
 
+            task.socials.map((item) => {
+                if (item.type === "TWITTER") {
+                    document.addEventListener("DOMContentLoaded", function(event) {
+                        document.getElementById("twitter-card").display = block;
+                        document.getElementById("twitter-button").innerHTML = item.buttonText;
+                    });
+                } else if (item.type === "DISCORD") {
+                    document.addEventListener("DOMContentLoaded", function(event) {
+                        document.getElementById("discord-card").display = block;
+                        document.getElementById("discord-button").innerHTML = item.buttonText;
+                    });
+                }            
+            });
             // hide twitter button if twitterComplete is false
             document.addEventListener("DOMContentLoaded", function(event) {
-                if (injectedObject.twitterComplete == true) {
+                if (task.connected.TWITTER == true) {
                     document.getElementById("twitter-table-button").style.display = "none";
                     document.getElementById("twitter-table-tick-icon").style.display = "block";
                 } else {
@@ -70,7 +188,7 @@
 
             // hide twitter button if twitterComplete is false
             document.addEventListener("DOMContentLoaded", function(event) {
-                if (injectedObject.discordComplete == true) {
+                if (task.connected.DISCORD == true) {
                     document.getElementById("discord-table-button").style.display = "none";
                     document.getElementById("discord-table-tick-icon").style.display = "block";
                 } else {
@@ -216,7 +334,7 @@
                 margin-top: 20px;
             }
 
-            .top-table-card {
+            .table:first-child {
                 background: rgba(255, 255, 255, 0.08);
                 border-radius: 12px 12px 4px 4px;
                 padding: 22px 12px;
@@ -224,9 +342,10 @@
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 2px;
+                display: none;
             }
 
-            .bottom-table-card {
+            .table:last-child {
                 background: rgba(255, 255, 255, 0.08);
                 border-radius: 4px 4px 12px 12px;
                 padding: 22px 12px;
@@ -234,9 +353,10 @@
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 2px;
+                display: none;
             }
 
-            .middle-table-card {
+            .table-card {
                 background: rgba(255, 255, 255, 0.08);
                 border-radius: 4px;
                 padding: 22px 12px;
@@ -244,6 +364,7 @@
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 2px;
+                display: none;
             }
 
             .table-card-title {
@@ -295,28 +416,30 @@
 
     <body style="padding: 16px; background-color: #000;">
         <div class="wrapper-card">
-            <img src="" id="logo-image" style="width: 24px; height: 24px; margin-bottom: 12px;">
+            <img src="" id="logo-image" style="margin-bottom: 12px;">
             <br/>
             <div id="title" class="title"></div>
             <div class="rounded-wrapper">
                 <span id="description"></span>
                 <img src="./assets/icons/dollar_coin.svg" style="width: 65px; position: relative; top: 11px;">
             </div>
-            <span class="claimed-title">80/1000 people claimed</span>
+            <span class="claimed-title"></span>
 
-            <div class="top-table-card">
-                <span class="table-card-title">Twitter</span>
-                <button id="twitter-table-button" onclick="triggerTwitterFollowFlow()" class="table-card-button">Follow</button>
-                <div id="twitter-table-tick-icon" style="display: none; background: rgba(0, 0, 0, 0.08); border-radius: 12px; padding: 4px;">
-                    <img src="./assets/icons/tick.svg" />
+            <div class="table">
+                <div id="twitter-card" class="top-table-card table-card">
+                    <span class="table-card-title">Twitter</span>
+                    <button id="twitter-table-button" onclick="triggerTwitterFollowFlow()" class="table-card-button">Follow</button>
+                    <div id="twitter-table-tick-icon" style="display: none; background: rgba(0, 0, 0, 0.08); border-radius: 12px; padding: 4px;">
+                        <img src="./assets/icons/tick.svg" />
+                    </div>
+                    
                 </div>
-                
-            </div>
-            <div class="bottom-table-card">
-                <span class="table-card-title">Discord</span>
-                <button id="discord-table-button" onclick="triggerDiscordLoginFlow()" class="table-card-button">Log in</button>
-                <div id="discord-table-tick-icon" style="display: none; background: rgba(0, 0, 0, 0.08); border-radius: 12px; padding: 4px;">
-                    <img src="./assets/icons/tick.svg" />
+                <div id="discord-card" class="bottom-table-card table-card">
+                    <span class="table-card-title">Discord</span>
+                    <button id="discord-table-button" onclick="triggerDiscordLoginFlow()" class="table-card-button">Log in</button>
+                    <div id="discord-table-tick-icon" style="display: none; background: rgba(0, 0, 0, 0.08); border-radius: 12px; padding: 4px;">
+                        <img src="./assets/icons/tick.svg" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -326,74 +449,20 @@
                 <span class="close" onclick="closeModalTwitter()">&times;</span>
                 <span class="modal-title">Enter your twitter @</span>
                 <input id="twitter-input-box" placeholder="Enter twitter username" style="background: #141624; width: 100%; padding: 21px 15px; border: none !important;"/>
-                <span style="margin-top: 20px;" id="status-text"> </span>
+                <span style="margin-top: 20px;" id="status-text-twitter"> </span>
                 <button style="margin-top: 20px; width: 100%;" onclick="checkTwitterAPIForFollow()" class="blue-button">Submit</button>
             </div>
-        <!-- <div style="display: flex; flex-direction: column;">
-        
-            <p style="font-size: 26px; font-weight: 600; margin-top: -12px;">Play League of Kingdoms,<br>level up & win crypto</p>
+        </div>
 
-           <div id='wallet-winnings-container' class="winnings-container">
-
-                <div style="float: left; margin-left: 16px; width: 50%;">
-                    <p style="font-size: 13px;">Your winning</p>
-
-                    <div style="display: flex; flex-direction: row;">
-                        <p style="font-size: 20px; font-weight: 600; line-height: 4px; margin-top: 4px;">1 NFT</p>
-                        <p style="opacity: 0.7; font-size: 13px; line-height: 4px; margin-top: 4px; margin-left: 8px;">$10</p>
-                    </div>
-
-                </div>
-
-                <div class="check-wallet-button">
-                    <p style="color: #E0417D; padding-right: 8px;">Check wallet</p>
-                    <img src="./wallet.svg" width="12px" height="12px">
-                </div>
-           </div>
-
-            <img id="prize-pool-image" src="https://android-hosted-assets.s3.ap-south-1.amazonaws.com/images/glip_lok_prizepool_banner.png"/>
-
-            <div class="contest-container">
-                <div style="display: flex; flex-direction:column; flex: 1;  align-items: center; justify-content: center;">
-                        <p class="contest-dim-text">Contest ends in</p>
-                        <p id='contest-end-timer' class="contest-normal-text"></p>
-                </div>
-                <div class="vertical-divider" ></div>
-                <div style="display: flex; flex-direction:column; flex: 1;  align-items: center; justify-content: center;">
-                    <p class="contest-dim-text">Your castle level</p>
-                    <p id='user-level' class="contest-normal-text">-</p>
-                </div>    
+        <div id="discordmodal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModalDiscord()">&times;</span>
+                <span class="modal-title">Enter your discord username</span>
+                <input id="discord-input-box" placeholder="Enter Discord username" style="background: #141624; width: 100%; padding: 21px 15px; border: none !important;"/>
+                <span style="margin-top: 20px;" id="status-text-discord"> </span>
+                <button style="margin-top: 20px; width: 100%;" onclick="checkDiscordAPIForJoin()" class="blue-button">Submit</button>
             </div>
-
-            <input id="type-ign-enabled" class="ign-input" type="text" placeholder="Type your in game name here">
-
-            <p id='cta' class="cta-button">Install Game</p>
-            
-            <p id='type-ign-disabled' class="disabled-button">Type your in game name here</p>
-
-            <p id='install-subtitle' style="font-size: 12px; margin-top: -12px; text-align: center;">⚠️ After installing, come back to this page & enter name</p>
-
-            <p style="font-weight: 500; font-size: 18px">Battlepower Leaderboard</p>
-
-            <div id="leaderboard-list" class="leaderboard-container">
-                <ul class="list">
-      
-                    <li class="leaderboard-list-item" id="leaderboard-item-self" style="padding-top: 8px;">
-                        <img class="profileImage" >
-                        <div style="display: flex; flex-direction: column; margin-left: 14px; flex: 1;">
-                            <p class='leaderboardIgn' style="font-size: 13px; line-height: 1px;"></p>
-                            <p class='leaderboardRank' style="font-size: 13px; opacity: 0.3; line-height: 1px; margin-top: 6px;"></p>
-                        </div>
-
-                        <div style="display: flex; flex-direction: column; margin-left: 14px; flex: 1; align-items: flex-end; margin-right: 8px;">
-                            <p class='leaderboardPower' style="font-size: 13px; line-height: 1px;"></p>
-                            <p class='leaderboardPrize' style="font-size: 13px; opacity: 0.3; line-height: 1px; margin-top: 6px;"></p>
-                        </div>
-                    </li>
-                </ul>
-              </div>
-
-        </div> -->
+        </div>
 
     </body>
 
@@ -423,7 +492,7 @@
                 // if no, show error message
                 const success = true;
                 if(success) {
-                    document.getElementById('status-text').innerHTML = 'Success! You are now following ' + gameName;
+                    document.getElementById('status-text-twitter').innerHTML = 'Success! You are now following ' + gameName;
                     injectedObject.twitterComplete = true; // setting the attribute in injected object to true
                     // closeModalTwitter after waiting 500ms
                     setTimeout(() => {
@@ -431,10 +500,40 @@
                     }, 1500);
                 } else {
                 // Show error message
-                    document.getElementById('status-text').innerHTML = 'This twitter username is not following ' + gameName;                    
+                    document.getElementById('status-text-twitter').innerHTML = 'This twitter username is not following ' + gameName;                    
                 }
             } else {
-                document.getElementById('status-text').innerHTML = 'Please enter a valid twitter username';
+                document.getElementById('status-text-twitter').innerHTML = 'Please enter a valid twitter username';
+            }
+        };
+
+        checkDiscordAPIForJoin = () => {
+            console.log('discord');
+            const discordUsername = document.getElementById('discord-input-box').value;
+            console.log(discordUsername);
+            if (discordUsername) {
+                //      window.open(`https://twitter.com/${twitterUsername}`, '_blank');
+                // Show success message
+                // Hide modal
+                // closeModalTwitter();
+                // update status text
+                // make api call to check if user is following
+                // if yes, show success message
+                // if no, show error message
+                const success = true;
+                if(success) {
+                    document.getElementById('status-text-discord').innerHTML = 'Success! You are now following ' + gameName;
+                    injectedObject.twitterComplete = true; // setting the attribute in injected object to true
+                    // closeModalTwitter after waiting 500ms
+                    setTimeout(() => {
+                        closeModalDiscord();
+                    }, 1500);
+                } else {
+                // Show error message
+                    document.getElementById('status-text-discord').innerHTML = 'This twitter username is not following ' + gameName;                    
+                }
+            } else {
+                document.getElementById('status-text-discord').innerHTML = 'Please enter a valid twitter username';
             }
         };
 
