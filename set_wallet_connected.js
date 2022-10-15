@@ -1,0 +1,13 @@
+const params = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+  });
+
+let gameUrl = params.url;
+
+if (gameUrl.includes('https://play.leagueofkingdoms.com/dapp/sign.html')) {
+    setWalletConnected('com.nplusent.lok')
+}
+
+function setWalletConnected(packageName) {
+    localStorage.setItem(`${packageName}_wallet_connected`, true)
+}
