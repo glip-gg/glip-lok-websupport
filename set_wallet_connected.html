@@ -1,3 +1,8 @@
+<html>
+    <head>
+
+        <script type="application/javascript">
+
 const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
   });
@@ -11,3 +16,8 @@ if (gameUrl.includes('https://play.leagueofkingdoms.com/dapp/sign.html')) {
 function setWalletConnected(packageName) {
     localStorage.setItem(`${packageName}_wallet_connected`, true)
 }
+
+</script>
+</head>
+
+</html>
